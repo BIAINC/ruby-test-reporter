@@ -13,7 +13,7 @@ module CodeClimate
 
       def validate
         raise InvalidPayload, "A git commit sha was not found in the test report payload" unless commit_sha
-        raise InvalidPayload, "A git commit timestamp was not found in the test report payload" unless committed_at
+#        raise InvalidPayload, "A git commit timestamp was not found in the test report payload" unless committed_at
         raise InvalidPayload, "A run at timestamp was not found in the test report payload" unless run_at
         raise InvalidPayload, "No source files were found in the test report payload" unless source_files?
         raise InvalidPayload, "Invalid source files were found in the test report payload" unless valid_source_files?
@@ -27,6 +27,8 @@ module CodeClimate
       end
 
       def committed_at
+        puts "@payload[:git][:committed_at] = "+@payload[:git][:committed_at].to_s
+        puts "@payload[:git] = "+@payload[:git].to_s
         @payload[:git] && @payload[:git][:committed_at]
       end
 

@@ -4,11 +4,22 @@ module CodeClimate
 
       class << self
         def info
-          {
-            head:         head,
-            committed_at: committed_at,
-            branch:       branch_from_git,
-          }
+          if not ENV['GIT_HEAD'] or not ENV['GIT_COMMITTED_AT'] or not ENV['GIT_BRANCH_FROM']
+            puts "Warning you have not set ENV['GIT_HEAD'], ENV['GIT_COMMITTED_AT'] and ENV['GIT_BRANCH_FROM']. This is a custom library and you need to set these env vars or you need to pass the entire .git directory into your docker container."
+            git_data = {
+              head:         head,
+              committed_at: committed_at,
+              branch:       branch_from_git,
+            }
+            return git_data
+          else
+            git_data = {
+              head:		ENV['GIT_HEAD'],
+              committed_at:	ENV['GIT_COMMITTED_AT'].to_i,
+              branch:		ENV['GIT_BRANCH_FROM'],
+            }
+            return git_data
+          end
         end
 
         def branch_from_git_or_ci
