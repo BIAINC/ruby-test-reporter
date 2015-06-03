@@ -5,6 +5,7 @@ module CodeClimate
       class << self
         def info
           if not ENV['GIT_HEAD'] or not ENV['GIT_COMMITTED_AT'] or not ENV['GIT_BRANCH_FROM']
+            puts "ENV['GIT_HEAD'] = "+ENV['GIT_HEAD'].to_s+"  ENV['GIT_COMMITTED_AT'] = "+ENV['GIT_COMMITTED_AT'].to_s + "  ENV['GIT_BRANCH_FROM'] = "+ENV['GIT_BRANCH_FROM'].to_s
             puts "Warning you have not set ENV['GIT_HEAD'], ENV['GIT_COMMITTED_AT'] and ENV['GIT_BRANCH_FROM']. This is a custom library and you need to set these env vars or you need to pass the entire .git directory into your docker container."
             git_data = {
               head:         head,
